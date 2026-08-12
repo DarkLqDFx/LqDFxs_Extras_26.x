@@ -1,0 +1,60 @@
+{
+  "lqdfxsextras.configuration.title": "LqDFx's Extras Configs",
+  "lqdfxsextras.configuration.section.lqdfxsextras.common.toml": "LqDFx's Extras Configs",
+  "lqdfxsextras.configuration.section.lqdfxsextras.common.toml.title": "LqDFx's Extras Configs",
+
+  "lqdfxsextras.configuration.Mob Rules": "Mob Rules",
+  "lqdfxsextras.configuration.Mob Rules.button": "Configure",
+  "lqdfxsextras.configuration.Mob Rules.tooltip": "",
+
+  "lqdfxsextras.configuration.Improved Mining Speed": "Improved Mining Speed",
+  "lqdfxsextras.configuration.Improved Mining Speed.button": "Configure",
+  "lqdfxsextras.configuration.Improved Mining Speed.tooltip": "",
+
+  "lqdfxsextras.configuration.Improved Hoe Use": "Improved Hoe Use",
+  "lqdfxsextras.configuration.Improved Hoe Use.button": "Configure",
+  "lqdfxsextras.configuration.Improved Hoe Use.tooltip": "",
+
+  "lqdfxsextras.configuration.creepers_burn": "Creepers Burn in Daylight",
+  "lqdfxsextras.configuration.creepers_burn.tooltip": "Creepers will burn in the sunlight just like Skeletons and Zombies.\n\n(OFF Vanilla Behavior)",
+  "lqdfxsextras.configuration.vex_spawn": "Vex spawning",
+  "lqdfxsextras.configuration.vex_spawn.tooltip": "Ability to disable Vex from spawning.\n\n(ON Vanilla behaviour)",
+  "lqdfxsextras.configuration.evoker_death": "Evoker death despawn Vex",
+  "lqdfxsextras.configuration.evoker_death.tooltip": "Ability to have Vex despawn when an Evoker Dies\n\n(OFF Vanilla Behavior)",
+  "lqdfxsextras.configuration.all_nether_skeleton": "All Wither Skeletons",
+  "lqdfxsextras.configuration.all_nether_skeleton.tooltip": "Replace Skeletons in Nether with Wither Skeletons\n\n(OFF Vanilla Behavior)",
+
+  "lqdfxsextras.configuration.creeper_griefing": "Creeper Griefing",
+  "lqdfxsextras.configuration.creeper_griefing.tooltip": "Creeper explosions damage blocks\n\n(ON Vanilla behavior)",
+  "lqdfxsextras.configuration.enderman_griefing": "Endermen Griefing",
+  "lqdfxsextras.configuration.enderman_griefing.tooltip": "Endermen pick up blocks\n\n(ON Vanilla behavior)",
+  "lqdfxsextras.configuration.farm_land_griefing": "Farmland Trample",
+  "lqdfxsextras.configuration.farm_land_griefing.tooltip": "Mobs trampling farmland\n\n(ON Vanilla behavior)",
+  "lqdfxsextras.configuration.ghast_griefing": "Ghast Griefing",
+  "lqdfxsextras.configuration.ghast_griefing.tooltip": "Ghast fireballs damage terrain\n\n(ON Vanilla behavior)",
+  "lqdfxsextras.configuration.silverfish_griefing": "Silverfish Griefing",
+  "lqdfxsextras.configuration.silverfish_griefing.tooltip": "Silverfish infest blocks\n\n(ON Vanilla behavior)",
+
+
+
+  "lqdfxsextras.configuration.ims_enabled": "Faster Mining Speed",
+  "lqdfxsextras.configuration.ims_enabled.tooltip": "Higher break speed with tools in the list and Efficiency. Higher the level the better the break speed\n\nAlso affects Beacons.\nWith correct tool, Efficiency V, and Haste II all blocks will be instant mine!",
+  "lqdfxsextras.configuration.ims_tools": "Tool List",
+  "lqdfxsextras.configuration.ims_tools.button": "Edit",
+  "lqdfxsextras.configuration.ims_tools.tooltip": "List of Pickaxes that can be used.\n\nAdd other mod tools to list if needed.",
+  "lqdfxsextras.configuration.ims_tnt_enabled": "TNT Breaks Bedrock?",
+  "lqdfxsextras.configuration.ims_tnt_enabled.tooltip": "What Black Magic is this!?!\n\nNote: TNT must be as close as possible to Bedrock!",
+  "lqdfxsextras.configuration.ims_tnt_radius": "Radius of Bedrock destroyed.",
+  "lqdfxsextras.configuration.ims_tnt_radius.tooltip": "Bigger Number Bigger Hole!\n\nNote: TNT must be as close as possible to Bedrock!",
+
+  "lqdfxsextras.configuration.ihu_CropReplanting": "Enable Crop Replanting",
+  "lqdfxsextras.configuration.ihu_CropReplanting.tooltip": "Breaking a fully matured crop will auto re-plant.",
+  "lqdfxsextras.configuration.ihu_UnTilling": "Enable Un-Till Farmland",
+  "lqdfxsextras.configuration.ihu_UnTilling.tooltip": "Shift Right-Clicking with a Hoe will revert Farmland back to Dirt",
+  "lqdfxsextras.configuration.ihu_tools": "Tool List",
+  "lqdfxsextras.configuration.ihu_tools.button": "Edit",
+  "lqdfxsextras.configuration.ihu_tools.tooltip": "List of Hoes that can be used.\n\nAdd other mod tools to list if needed.",
+  "lqdfxsextras.configuration.ihu_efficiency_lvl": "Eff Level - Unused",
+  "lqdfxsextras.configuration.ihu_efficiency_lvl.tooltip": "Unused... Maybe in the future?"
+}
+
