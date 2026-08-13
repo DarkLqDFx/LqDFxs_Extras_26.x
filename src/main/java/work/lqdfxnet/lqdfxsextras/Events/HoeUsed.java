@@ -13,6 +13,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.FarmlandBlock;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.BlockHitResult;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -39,7 +40,8 @@ public class HoeUsed {
         Player player = event.getEntity();
         if (!player.isShiftKeyDown()) return;   // Must be sneaking
         ItemStack hoe = player.getMainHandItem();
-        if (hoe.isEmpty() || !Utilities.isConfiguredTool(hoe, ModConfigCommon.ihuTools.get())) return;
+        boolean correctTool = Utilities.isConfiguredTool(hoe, ModConfigCommon.ihuTools.get());
+        if (hoe.isEmpty() || !correctTool) return;
 
         // Cancel vanilla interaction
         event.setCanceled(true);
@@ -64,27 +66,34 @@ public class HoeUsed {
         Player player = event.getEntity();
         if (player.isShiftKeyDown()) return;   // Sneaking preserves Vanilla behavior
         ItemStack hoe = player.getMainHandItem();
-        if (hoe.isEmpty() || !Utilities.isConfiguredTool(hoe, ModConfigCommon.ihuTools.get())) return;
+        boolean correctTool = Utilities.isConfiguredTool(hoe, ModConfigCommon.ihuTools.get());
+        if (hoe.isEmpty() || !correctTool) return;
 
         int radius = Utilities.getHoeRadius(hoe.toString());
         int efficiencyLevel = Utilities.checkEfficiency(hoe,event.getLevel());
         if ((efficiencyLevel >= 1) && (efficiencyLevel <= 2))  radius = efficiencyLevel + radius;
 
         boolean tillable = Utilities.canBeFarmland(player, state, hit);
+        boolean waterLogged;
+        if (state.getBlock() instanceof SimpleWaterloggedBlock)
+            waterLogged = state.getValue(BlockStateProperties.WATERLOGGED);
+        else waterLogged = false;
 
-        if (!tillable && (state.getBlock() instanceof SimpleWaterloggedBlock)) tillable = true;
-        else if (!tillable) return;
+
+        if (!tillable && !waterLogged) return;
+        //else if (!tillable) return;
 
         // Cancel vanilla interaction
         event.setCanceled(true);
-
+        int tillCount = 0;
         for (int dx = -radius; dx <= radius; dx++) {
             for (int dz = -radius; dz <= radius; dz++) {
                 BlockPos target = pos.offset(dx, 0, dz);
                 BlockState targetState = level.getBlockState(target);
                 BlockHitResult targetHit = new BlockHitResult(target.getCenter(), hit.getDirection(), target, hit.isInside());
-                tillable = Utilities.canBeFarmland(player, targetState, targetHit);
-                if (tillable) {
+                boolean tillBlock = Utilities.canBeFarmland(player, targetState, targetHit);
+                if (tillBlock) {
+                    tillCount++;
                     LqDFxsExtras.queueServerWork(1, () -> {
                         BlockState farmland = BuiltInRegistries.BLOCK.getValue(Identifier.parse("minecraft:farmland")).defaultBlockState();
                         level.setBlock(target, farmland, Block.UPDATE_ALL);
@@ -93,7 +102,9 @@ public class HoeUsed {
             }
         }
         player.swing(InteractionHand.MAIN_HAND, true);
-        hoe.hurtAndBreak(1, player, player.getUsedItemHand());
-        level.playSound(null, pos, SoundEvents.HOE_TILL, SoundSource.BLOCKS, 1.0F, 0.8F);
+        if (tillCount >=1) {
+            hoe.hurtAndBreak(tillCount, player, player.getUsedItemHand());
+            level.playSound(null, pos, SoundEvents.HOE_TILL, SoundSource.BLOCKS, 1.0F, 0.8F);
+        }
     }
 }

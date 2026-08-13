@@ -23,6 +23,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import java.util.List;
 
 import static net.neoforged.neoforge.common.ItemAbilities.HOE_TILL;
+import static work.lqdfxnet.lqdfxsextras.LqDFxsExtras.debugInfo;
 
 public class Utilities {
 
@@ -94,26 +95,20 @@ public class Utilities {
                 .withParameter(LootContextParams.BLOCK_STATE, state)
                 .withParameter(LootContextParams.TOOL, ItemStack.EMPTY);
 
-        // Get drops from loot table
         List<ItemStack> drops = state.getDrops(builder);
 
         // Find the seed item in the drops
         for (ItemStack drop : drops) {
             Item item = drop.getItem();
             ItemStack itemStack = new ItemStack(item);
-            //if (item.builtInRegistryHolder().is(ItemTags.VILLAGER_PLANTABLE_SEEDS)) { return item; }
             if (itemStack.is(ItemTags.VILLAGER_PLANTABLE_SEEDS)) { return item; }
-
             // Carrots & potatoes drop themselves as seeds
             if (item instanceof net.minecraft.world.item.Item) {
                 if (block instanceof CropBlock crop) {
-                    if (item == crop.asItem()) {
-                        return item;
-                    }
+                    if (item == crop.asItem()) return item;
                 }
             }
         }
-
         return null;
     }
 
@@ -126,6 +121,7 @@ public class Utilities {
      */
     public static void replantCrop(ServerLevel level, BlockPos pos, BlockState oldState) {
         Block block = oldState.getBlock();
+        debugInfo("[RC] Block: " + block);
         if (!(block instanceof CropBlock crop)) return;
 
         BlockState newState = crop.getStateForAge(0);
@@ -133,7 +129,7 @@ public class Utilities {
     }
 
     /* -----------------------------------------------------------
-     *  TIER → RADIUS MAPPING
+     *  TIER RADIUS MAPPING
      * ----------------------------------------------------------- */
 
     public static int getHoeRadius(String hoeKey) {

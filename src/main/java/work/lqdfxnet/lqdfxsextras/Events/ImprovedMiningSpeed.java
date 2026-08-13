@@ -28,7 +28,8 @@ public class ImprovedMiningSpeed {
         // Tool Check
         ItemStack tool = player.getMainHandItem();
         if (tool.isEmpty()) return;     // Make sure there is a tool in hand
-        if (!Utilities.isConfiguredTool(tool,ModConfigCommon.imsTools.get())) return;
+        boolean correctTool = Utilities.isConfiguredTool(tool, ModConfigCommon.ihuTools.get());
+        if (!correctTool) return;
 
         int effLevel = Utilities.checkEfficiency(tool,world);   // Get Efficiency Level
 
@@ -48,7 +49,7 @@ public class ImprovedMiningSpeed {
         float baseSpeed = event.getOriginalSpeed();
         float hardness = state.getDestroySpeed(world, blockPos);
         float hardnessMultiplier = 1.0f + (hardness / 2);   // Hardness-scaled multiplier
-        float bonus = Mth.clamp(effLevel * hardnessMultiplier,0,100);   // Efficiency-scaled bonus
+        float bonus = Mth.clamp(effLevel * hardnessMultiplier,0,90);   // Efficiency-scaled bonus
         event.setNewSpeed(baseSpeed + bonus);   // Final speed
     }
 }
