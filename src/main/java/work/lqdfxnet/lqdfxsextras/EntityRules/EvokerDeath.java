@@ -1,7 +1,6 @@
 package work.lqdfxnet.lqdfxsextras.EntityRules;
 
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.monster.Vex;
 import net.minecraft.world.entity.monster.illager.Evoker;
 import net.minecraft.world.level.LevelAccessor;
@@ -12,8 +11,6 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import work.lqdfxnet.lqdfxsextras.ModConfigCommon;
 
-import java.util.Comparator;
-
 @EventBusSubscriber
 public class EvokerDeath {
 
@@ -22,21 +19,28 @@ public class EvokerDeath {
 
         // Server side event only
         if (event.getEntity().level().isClientSide()) return;
-        if (!(event.getEntity() instanceof Evoker)) return;
+        if (!(event.getEntity() instanceof Evoker evoker)) return;
         if (!vexDespawnOnEvokerDeathEnabled()) return;
 
-        BlockPos pos = event.getEntity().blockPosition();
-        Vec3 center = new Vec3(pos.getX(), pos.getY(), pos.getZ());
-        LevelAccessor world = event.getEntity().level();
+        LevelAccessor world = evoker.level();
+        Vec3 center = evoker.position();
 
-        world.getEntitiesOfClass(
-                Entity.class,
-                new AABB(center, center).inflate(8), // 16/2d = 8 radius
-                e -> true
-        ).stream().sorted(Comparator.comparingDouble(e -> e.distanceToSqr(center))).toList().stream().filter(nearby -> !nearby.level().isClientSide() && nearby instanceof Vex).forEach(Entity::discard);
+
+        // Search only for Vex entities within radius
+        for (Vex vex : world.getEntitiesOfClass(
+                Vex.class,
+                new AABB(center, center).inflate(16),
+                EntitySelector.NO_SPECTATORS
+        )) {
+            if (vex.getOwner() == evoker) {
+                vex.discard();
+            }
+        }
+
     }
 
     private static boolean vexDespawnOnEvokerDeathEnabled() {
         return ModConfigCommon.mrEvokerDeath.get();
     }
+
 }
