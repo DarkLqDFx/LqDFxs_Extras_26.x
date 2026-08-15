@@ -25,18 +25,16 @@ public class mobSpawning {
         // Server side event only
         if (event.getEntity().level().isClientSide()) return;
 
-        // Vex spawning
-        // False here means not to spawn
+        // Vex spawning - False here means not to spawn
         if (event.getEntity() instanceof Vex && !vexSpawnEnabled()) {
             event.setCanceled(true);
             return;
         }
 
-        // Convert Skeletons in Nether
+        // Convert Skeletons in Nether - True means Convert
         if ((event.getEntity() instanceof Skeleton skeleton)) {
-            if (!netherSkeletonReplacementEnabled()) return;    // True means Convert
+            if (!netherSkeletonReplacementEnabled()) return;
 
-            // Set variables
             BlockPos pos = skeleton.blockPosition();
             LevelAccessor world = skeleton.level();
             boolean isNether = world.getBiome(pos).is(TagKey.create(Registries.BIOME, Identifier.parse("minecraft:is_nether")));
