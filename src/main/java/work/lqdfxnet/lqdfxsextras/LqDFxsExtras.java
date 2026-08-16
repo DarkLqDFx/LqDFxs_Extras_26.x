@@ -7,6 +7,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.util.thread.SidedThreadGroups;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
@@ -15,6 +16,8 @@ import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import org.slf4j.Logger;
+import work.lqdfxnet.lqdfxsextras.Data.ModDataComponents;
+import work.lqdfxnet.lqdfxsextras.item.ModItems;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -26,6 +29,8 @@ public class LqDFxsExtras {
 
     public static final String MODID = "lqdfxsextras";
     public static final Logger LOGGER = LogUtils.getLogger();
+
+
 
     // Debug Logger Method
     public static void debugInfo(String msg, Object... args) {
@@ -40,6 +45,10 @@ public class LqDFxsExtras {
         // Register setup events
         modEventBus.addListener(this::commonSetup);
 
+        //Register Items
+        ModItems.ITEMS.register(modEventBus);
+        ModDataComponents.DATA_COMPONENTS.register(modEventBus);
+
         // Register global event listeners
         NeoForge.EVENT_BUS.register(this);
 
@@ -50,6 +59,10 @@ public class LqDFxsExtras {
 
     private void commonSetup(final FMLCommonSetupEvent event) {
         LOGGER.info("Lqdfxextras common setup complete.");
+    }
+
+    public void onClientSetup(final FMLClientSetupEvent event) {
+        //ModItems.ModItemProperties.registerItemProperties();
     }
 
     @SubscribeEvent

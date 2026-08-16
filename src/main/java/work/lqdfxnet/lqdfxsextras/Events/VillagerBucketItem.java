@@ -24,7 +24,6 @@ import net.minecraft.world.phys.HitResult;
 import net.neoforged.fml.common.EventBusSubscriber;
 import org.jspecify.annotations.NonNull;
 import work.lqdfxnet.lqdfxsextras.Data.ModDataComponents;
-import work.lqdfxnet.lqdfxsextras.LqDFxsExtras;
 
 @EventBusSubscriber
 public class VillagerBucketItem extends Item {

@@ -55,6 +55,8 @@
   "lqdfxsextras.configuration.ihu_tools.button": "Edit",
   "lqdfxsextras.configuration.ihu_tools.tooltip": "List of Hoes that can be used.\n\nAdd other mod tools to list if needed.",
   "lqdfxsextras.configuration.ihu_efficiency_lvl": "Eff Level - Unused",
-  "lqdfxsextras.configuration.ihu_efficiency_lvl.tooltip": "Unused... Maybe in the future?"
+  "lqdfxsextras.configuration.ihu_efficiency_lvl.tooltip": "Unused... Maybe in the future?",
+
+  "item.lqdfxsextras.villager_bucket_full": "Villager Bucket"
 }
 
