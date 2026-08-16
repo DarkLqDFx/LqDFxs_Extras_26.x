@@ -26,41 +26,54 @@ public class CropReplanting {
     @SubscribeEvent
     public static void onCropHarvest(PlayerInteractEvent.RightClickBlock event) {
 
-        if (!(event.getLevel().getBlockState(event.getPos()).getBlock() instanceof CropBlock)) return;
-        if (!(event.getLevel() instanceof ServerLevel level)) return;   // Must be server-side
-        if (!ModConfigCommon.ihuReplantEnabled.get()) return;           // Option Enabled?
+        BlockState clickedState = event.getLevel().getBlockState(event.getPos());
+        if (!(clickedState.getBlock() instanceof CropBlock)) return;
+        if (!(event.getLevel() instanceof ServerLevel level)) return;
+        if (!ModConfigCommon.ihuReplantEnabled.get()) return;
 
-        Player player = event.getEntity();                              // Get Player Entity
-        ItemStack tool = player.getMainHandItem();                      // Tool Check
-        if (tool.isEmpty()) return;                                     // Make sure there is a tool in hand
+        Player player = event.getEntity();
+        ItemStack tool = player.getMainHandItem();
         boolean correctTool = Utilities.isConfiguredTool(tool, ModConfigCommon.ihuTools.get());
-        if (!correctTool) return;
+        int radius = correctTool ? Utilities.getHoeRadius(tool.toString()) : 0;
 
-        BlockPos pos = event.getHitVec().getBlockPos();
-        BlockState state = event.getLevel().getBlockState(pos);
-        Block block = state.getBlock();
+        BlockPos origin = event.getHitVec().getBlockPos();
+        event.setCanceled(true);
 
-        IntegerProperty ageProp = Utilities.getAgeProperty(block);
-        int maxAge = Utilities.getMaxAge(block);
-        Item seedItem = Utilities.getSeedFromCrop(level, state, pos);
-        if (seedItem == null) return;
+        int replantedCount = 0;
 
-        if (ageProp != null && state.getValue(ageProp) == maxAge) {
+        for (int dx = -radius; dx <= radius; ++dx) {
+            for (int dz = -radius; dz <= radius; ++dz) {
 
-            Utilities.consumeOneSeed(event.getEntity(), seedItem);
+                BlockPos targetPos = origin.offset(dx, 0, dz);
+                BlockState targetState = level.getBlockState(targetPos);
+                Block targetBlock = targetState.getBlock();
 
-            int xp = level.getRandom().nextInt(3) + 1;                  // 1–3 XP like vanilla
-            level.playSound(null, pos, SoundEvents.CROP_BREAK, SoundSource.BLOCKS, 1.0F, 1.0F);
-            player.swing(InteractionHand.MAIN_HAND, true);
+                IntegerProperty ageProp = Utilities.getAgeProperty(targetBlock);
+                if (ageProp == null) continue;
 
-            // Replant next tick (after drops)
-            LqDFxsExtras.queueServerWork(5, () -> {
-                level.destroyBlock(pos, true);                // true = drop loot
-                tool.hurtAndBreak(1, player, player.getUsedItemHand());
-                level.addFreshEntity(new ExperienceOrb(level, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, xp));
-                Utilities.replantCrop(level, pos, state);
-                level.playSound(null,pos,SoundEvents.CROP_PLANTED,SoundSource.BLOCKS,1.0F,1.0F);
-            });
+                int age = targetState.getValue(ageProp);
+                int maxAge = Utilities.getMaxAge(targetBlock);
+
+                Item seedItem = Utilities.getSeedFromCrop(level, targetState, targetPos);
+                if (seedItem == null) continue;
+
+                if (age == maxAge) {
+                    Utilities.consumeOneSeed(event.getEntity(), seedItem);
+                    replantedCount++;
+
+                    LqDFxsExtras.queueServerWork(1, () -> {
+                        int xp = level.getRandom().nextInt(3) + 1;
+                        level.destroyBlock(targetPos, true);
+                        level.addFreshEntity(new ExperienceOrb(level, targetPos.getX() + 0.5, targetPos.getY() + 0.5, targetPos.getZ() + 0.5, xp));
+                        Utilities.replantCrop(level, targetPos, targetState);
+                    });
+                }
+            }
+        }
+        player.swing(InteractionHand.MAIN_HAND, true);
+        if (replantedCount != 0) {
+            level.playSound(null, origin, SoundEvents.CROP_BREAK, SoundSource.BLOCKS, 1.0F, 1.0F);
+            if (!tool.isEmpty()) tool.hurtAndBreak(replantedCount, player, player.getUsedItemHand());
         }
     }
 }

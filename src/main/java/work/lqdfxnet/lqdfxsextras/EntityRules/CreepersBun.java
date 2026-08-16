@@ -22,39 +22,31 @@ public class CreepersBun {
     @SubscribeEvent
     public static void burnCreepers(EntityTickEvent.Pre event) {
 
-        // Server side event only
         if (event.getEntity().level().isClientSide()) return;
         if (!(event.getEntity() instanceof Creeper)) return;
         if (!creepersBurnEnabled()) return;
 
-        // Set variables
         Entity creeper = event.getEntity();
         BlockPos pos = event.getEntity().blockPosition();
         LevelAccessor world = event.getEntity().level();
 
-        if (!isInNonBurnableBlock(world, pos, creeper)) {
-            queueServerWork(20, () -> creeper.igniteForSeconds(8F));
-        }
+        if (isInNonBurnableBlock(world, pos, creeper)) return;
+        queueServerWork(20, () -> creeper.igniteForSeconds(8F));
 
     }
 
     private static boolean isInNonBurnableBlock(LevelAccessor world, BlockPos pos, Entity entity) {
 
-        // world
         boolean worldDim = world.getBiome(pos).is(TagKey.create(Registries.BIOME, Identifier.parse("minecraft:is_overworld")));
         boolean worldBio = world.getBiome(pos).is(TagKey.create(Registries.BIOME, Identifier.parse("c:is_dry")));
         boolean worldDay = world instanceof Level level && level.isBrightOutside();
         boolean blockSeeSky = world.canSeeSky(pos);
         boolean skyBrightness = world.getBrightness(LightLayer.SKY, pos) == 15;
-
-        // Entity
         boolean waterLikeBlock = entity.isInWaterOrRain() || entity.isInPowderSnow || entity.wasInPowderSnow;
-
         return worldDim && worldBio && worldDay && blockSeeSky && skyBrightness && waterLikeBlock;
     }
 
     private static boolean creepersBurnEnabled() {
         return ModConfigCommon.mrCreepersBurn.get();
     }
-
 }

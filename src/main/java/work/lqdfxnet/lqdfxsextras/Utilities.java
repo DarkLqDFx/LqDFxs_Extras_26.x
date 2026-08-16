@@ -23,7 +23,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import java.util.List;
 
 import static net.neoforged.neoforge.common.ItemAbilities.HOE_TILL;
-import static work.lqdfxnet.lqdfxsextras.LqDFxsExtras.debugInfo;
 
 public class Utilities {
 
@@ -115,15 +114,10 @@ public class Utilities {
     /* -----------------------------------------------------------
      *  REPLANTING LOGIC
      * ----------------------------------------------------------- */
-    /**
-     * Replants the crop at the same position (age 0).
-     * Assumes seeds have already been consumed.
-     */
+
     public static void replantCrop(ServerLevel level, BlockPos pos, BlockState oldState) {
         Block block = oldState.getBlock();
-        debugInfo("[RC] Block: " + block);
         if (!(block instanceof CropBlock crop)) return;
-
         BlockState newState = crop.getStateForAge(0);
         level.setBlock(pos, newState, Block.UPDATE_ALL);
     }

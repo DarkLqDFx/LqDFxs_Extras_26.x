@@ -107,6 +107,7 @@ public class ModConfigCommon {
         return obj instanceof String toolName && BuiltInRegistries.ITEM.containsKey(Identifier.parse(toolName));
     }
 
+    /*
     private static boolean validateEntity(final Object obj) {
         return obj instanceof String entityName && BuiltInRegistries.ENTITY_TYPE.containsKey(Identifier.parse(entityName));
     }
@@ -115,14 +116,12 @@ public class ModConfigCommon {
         return obj instanceof String blockName && BuiltInRegistries.BLOCK.containsKey(Identifier.parse(blockName));
     }
 
-    /* Old code for blocks... May be useful later!
 
     public static Set<Block> bm_blocks_affected;
     @SubscribeEvent
     static void onLoad(final ModConfigEvent event) {
         bm_blocks_affected = bmBlocksAffected.get().stream().map(blockName -> BuiltInRegistries.BLOCK.getValue(Identifier.parse(blockName))).collect((Collectors.toSet()));
     }
-
      */
 
     public static final ModConfigSpec SPEC = BUILDER.build();

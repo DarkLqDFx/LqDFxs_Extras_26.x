@@ -43,10 +43,8 @@ public class HoeUsed {
         boolean correctTool = Utilities.isConfiguredTool(hoe, ModConfigCommon.ihuTools.get());
         if (hoe.isEmpty() || !correctTool) return;
 
-        // Cancel vanilla interaction
         event.setCanceled(true);
 
-        // Convert farmland → dirt next tick
         LqDFxsExtras.queueServerWork(1, () -> {
             Utilities.unTill(level, pos);
             player.swing(InteractionHand.MAIN_HAND, true);
@@ -81,9 +79,7 @@ public class HoeUsed {
 
 
         if (!tillable && !waterLogged) return;
-        //else if (!tillable) return;
 
-        // Cancel vanilla interaction
         event.setCanceled(true);
         int tillCount = 0;
         for (int dx = -radius; dx <= radius; dx++) {

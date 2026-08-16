@@ -20,7 +20,6 @@ public class BreakingBedrockTNT {
     @SubscribeEvent
     public static void tntBreaksBedrock(ExplosionEvent.Detonate event) {
         if (!ModConfigCommon.imsTNTBreaksEnable.get()) return;
-        // Server side event only
         if (event.getLevel().isClientSide()) return;
         if (!(event.getExplosion().getDirectSourceEntity() instanceof PrimedTnt)) return;
 
@@ -30,12 +29,7 @@ public class BreakingBedrockTNT {
 
         scanExplosionRadius(center, radius, pos -> {
             BlockState state = level.getBlockState(pos);
-
-            // Check for bedrock
-            if (state.is(Blocks.BEDROCK)) {
-                // Replace bedrock with air
-                level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
-            }
+            if (state.is(Blocks.BEDROCK)) level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
         });
     }
 
@@ -47,10 +41,7 @@ public class BreakingBedrockTNT {
                 origin.getX() - radius, origin.getY() - radius, origin.getZ() - radius,
                 origin.getX() + radius, origin.getY() + radius, origin.getZ() + radius)) {
 
-            // Filter by spherical distance (optional but cleaner)
-            if (pos.distSqr(origin) <= radius * radius) {
-                action.accept(pos);
-            }
+            if (pos.distSqr(origin) <= radius * radius) action.accept(pos);
         }
     }
 

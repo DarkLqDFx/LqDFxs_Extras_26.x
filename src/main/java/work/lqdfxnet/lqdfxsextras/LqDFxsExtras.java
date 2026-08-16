@@ -43,8 +43,6 @@ public class LqDFxsExtras {
         // Register global event listeners
         NeoForge.EVENT_BUS.register(this);
 
-        // Register deferred registries
-
         // Register config
         modContainer.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
         modContainer.registerConfig(ModConfig.Type.COMMON, ModConfigCommon.SPEC);

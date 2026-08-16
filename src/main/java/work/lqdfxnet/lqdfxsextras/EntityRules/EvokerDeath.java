@@ -25,7 +25,6 @@ public class EvokerDeath {
         LevelAccessor world = evoker.level();
         Vec3 center = evoker.position();
 
-
         // Search only for Vex entities within radius
         for (Vex vex : world.getEntitiesOfClass(
                 Vex.class,
@@ -36,7 +35,6 @@ public class EvokerDeath {
                 vex.discard();
             }
         }
-
     }
 
     private static boolean vexDespawnOnEvokerDeathEnabled() {

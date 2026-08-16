@@ -25,7 +25,6 @@ public class ImprovedMiningSpeed {
         LevelAccessor world = event.getEntity().level();
         Player player = event.getEntity();
 
-        // Tool Check
         ItemStack tool = player.getMainHandItem();
         if (tool.isEmpty()) return;     // Make sure there is a tool in hand
         boolean correctTool = Utilities.isConfiguredTool(tool, ModConfigCommon.ihuTools.get());

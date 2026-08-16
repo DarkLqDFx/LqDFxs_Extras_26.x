@@ -18,7 +18,6 @@ public class mobGriefing {
     @SubscribeEvent
     public static void trampleFarmland(BlockEvent.FarmlandTrampleEvent event) {
 
-        // Server side event only
         if (event.getEntity().level().isClientSide()) return;
         if (!(event.getEntity() instanceof Player)) return;
         if (!farmlandTrampleEnabled()) return;
@@ -29,11 +28,8 @@ public class mobGriefing {
     @SubscribeEvent
     public static void MobEntityGriefing(final EntityMobGriefingEvent event) {
 
-        // Server side event only
         if (event.getEntity().level().isClientSide()) return;
-
         Entity entity = event.getEntity();
-
         if (entity instanceof Player) { return; }
         if ((entity instanceof EnderMan) && !endermanGriefingEnabled()) { event.setCanGrief(false); return; }
         if ((entity instanceof Creeper) && !creeperGriefingEnabled()) { event.setCanGrief(false); return; }
