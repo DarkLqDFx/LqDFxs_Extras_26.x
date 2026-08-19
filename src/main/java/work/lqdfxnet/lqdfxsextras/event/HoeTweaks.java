@@ -1,4 +1,4 @@
-package work.lqdfxnet.lqdfxsextras.Events;
+package work.lqdfxnet.lqdfxsextras.event;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -19,13 +19,16 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import work.lqdfxnet.lqdfxsextras.LqDFxsExtras;
-import work.lqdfxnet.lqdfxsextras.ModConfigCommon;
+import work.lqdfxnet.lqdfxsextras.ModConfig;
 import work.lqdfxnet.lqdfxsextras.Utilities;
 
 
-@EventBusSubscriber(modid = "lqdfxsextras")
-public class HoeUsed {
+@EventBusSubscriber
+public class HoeTweaks {
 
+    /* -----------------------------------------------------------
+     *  un-Till Farmland
+     * ----------------------------------------------------------- */
     @SubscribeEvent
     public static void unTilling(PlayerInteractEvent.RightClickBlock event) {
         if (!(event.getLevel() instanceof ServerLevel level)) return;
@@ -40,7 +43,7 @@ public class HoeUsed {
         Player player = event.getEntity();
         if (!player.isShiftKeyDown()) return;   // Must be sneaking
         ItemStack hoe = player.getMainHandItem();
-        boolean correctTool = Utilities.isConfiguredTool(hoe, ModConfigCommon.ihuTools.get());
+        boolean correctTool = Utilities.isConfiguredTool(hoe, ModConfig.ihuTools.get());
         if (hoe.isEmpty() || !correctTool) return;
 
         event.setCanceled(true);
@@ -53,6 +56,9 @@ public class HoeUsed {
         });
     }
 
+    /* -----------------------------------------------------------
+     *  Area Tilling
+     * ----------------------------------------------------------- */
     @SubscribeEvent
     public static void areaTilling(PlayerInteractEvent.RightClickBlock event) {
         if (!(event.getLevel() instanceof ServerLevel level)) return;
@@ -64,7 +70,7 @@ public class HoeUsed {
         Player player = event.getEntity();
         if (player.isShiftKeyDown()) return;   // Sneaking preserves Vanilla behavior
         ItemStack hoe = player.getMainHandItem();
-        boolean correctTool = Utilities.isConfiguredTool(hoe, ModConfigCommon.ihuTools.get());
+        boolean correctTool = Utilities.isConfiguredTool(hoe, ModConfig.ihuTools.get());
         if (hoe.isEmpty() || !correctTool) return;
 
         int radius = Utilities.getHoeRadius(hoe.toString());
@@ -103,4 +109,9 @@ public class HoeUsed {
             level.playSound(null, pos, SoundEvents.HOE_TILL, SoundSource.BLOCKS, 1.0F, 0.8F);
         }
     }
+
+    /* -----------------------------------------------------------
+     *
+     * ----------------------------------------------------------- */
+
 }

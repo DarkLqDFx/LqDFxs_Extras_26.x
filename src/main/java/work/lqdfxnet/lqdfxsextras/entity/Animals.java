@@ -1,4 +1,4 @@
-package work.lqdfxnet.lqdfxsextras.EntityRules;
+package work.lqdfxnet.lqdfxsextras.entity;
 
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.AgeableMob;
@@ -9,8 +9,12 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.BabyEntitySpawnEvent;
 
 @EventBusSubscriber
-public class BreedingAnimals {
+public class Animals {
 
+    /* -----------------------------------------------------------
+     * Pig litters - Inspired By Quark Mod
+     *  When breeding Pigs, there is a chance for 3 offspring
+     * ----------------------------------------------------------- */
     @SubscribeEvent
     public static void pigLitters(BabyEntitySpawnEvent event) {
         if (event.getChild() instanceof Pig) {

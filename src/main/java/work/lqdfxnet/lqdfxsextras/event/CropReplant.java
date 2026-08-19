@@ -1,4 +1,4 @@
-package work.lqdfxnet.lqdfxsextras.Events;
+package work.lqdfxnet.lqdfxsextras.event;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -17,11 +17,11 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import work.lqdfxnet.lqdfxsextras.LqDFxsExtras;
-import work.lqdfxnet.lqdfxsextras.ModConfigCommon;
+import work.lqdfxnet.lqdfxsextras.ModConfig;
 import work.lqdfxnet.lqdfxsextras.Utilities;
 
 @EventBusSubscriber(modid = "lqdfxsextras")
-public class CropReplanting {
+public class CropReplant {
 
     @SubscribeEvent
     public static void onCropHarvest(PlayerInteractEvent.RightClickBlock event) {
@@ -29,11 +29,11 @@ public class CropReplanting {
         BlockState clickedState = event.getLevel().getBlockState(event.getPos());
         if (!(clickedState.getBlock() instanceof CropBlock)) return;
         if (!(event.getLevel() instanceof ServerLevel level)) return;
-        if (!ModConfigCommon.ihuReplantEnabled.get()) return;
+        if (!ModConfig.ihuReplantEnabled.get()) return;
 
         Player player = event.getEntity();
         ItemStack tool = player.getMainHandItem();
-        boolean correctTool = Utilities.isConfiguredTool(tool, ModConfigCommon.ihuTools.get());
+        boolean correctTool = Utilities.isConfiguredTool(tool, ModConfig.ihuTools.get());
         int radius = correctTool ? Utilities.getHoeRadius(tool.toString()) : 0;
 
         BlockPos origin = event.getHitVec().getBlockPos();

@@ -1,4 +1,6 @@
 {
+ "entity.minecraft.villager.lqdfxsextras.beekeeper": "Bee Keeper",
+
   "lqdfxsextras.configuration.title": "LqDFx's Extras Configs",
   "lqdfxsextras.configuration.section.lqdfxsextras.common.toml": "LqDFx's Extras Configs",
   "lqdfxsextras.configuration.section.lqdfxsextras.common.toml.title": "LqDFx's Extras Configs",
@@ -57,6 +59,12 @@
   "lqdfxsextras.configuration.ihu_efficiency_lvl": "Eff Level - Unused",
   "lqdfxsextras.configuration.ihu_efficiency_lvl.tooltip": "Unused... Maybe in the future?",
 
-  "item.lqdfxsextras.villager_bucket_full": "Villager Bucket"
+  "item.lqdfxsextras.villager_bucket_plains": "Bucket - Plains Villager",
+  "item.lqdfxsextras.villager_bucket_desert": "Bucket - Desert Villager",
+  "item.lqdfxsextras.villager_bucket_savanna": "Bucket - Savanna Villager",
+  "item.lqdfxsextras.villager_bucket_taiga": "Bucket - Taiga Villager",
+  "item.lqdfxsextras.villager_bucket_snow": "Bucket - Snow Villager",
+  "item.lqdfxsextras.villager_bucket_swamp": "Bucket - Swamp Villager",
+  "item.lqdfxsextras.villager_bucket_jungle": "Bucket - Jungle Villager"
 }
 

@@ -1,4 +1,4 @@
-package work.lqdfxnet.lqdfxsextras.Data;
+package work.lqdfxnet.lqdfxsextras.ModData;
 
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;

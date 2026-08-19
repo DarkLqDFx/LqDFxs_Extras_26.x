@@ -1,4 +1,4 @@
-package work.lqdfxnet.lqdfxsextras.Events;
+package work.lqdfxnet.lqdfxsextras.event;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
@@ -11,23 +11,23 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
-import work.lqdfxnet.lqdfxsextras.ModConfigCommon;
+import work.lqdfxnet.lqdfxsextras.ModConfig;
 import work.lqdfxnet.lqdfxsextras.Utilities;
 
 
 @EventBusSubscriber
-public class ImprovedMiningSpeed {
+public class ImproveMiningSpeed {
 
     @SubscribeEvent
     public static void onBreakSpeed(PlayerEvent.BreakSpeed event) {
-        if (!ModConfigCommon.imsEnable.get()) return;   // Bail if not enabled
+        if (!ModConfig.imsEnable.get()) return;   // Bail if not enabled
 
         LevelAccessor world = event.getEntity().level();
         Player player = event.getEntity();
 
         ItemStack tool = player.getMainHandItem();
         if (tool.isEmpty()) return;     // Make sure there is a tool in hand
-        boolean correctTool = Utilities.isConfiguredTool(tool, ModConfigCommon.ihuTools.get());
+        boolean correctTool = Utilities.isConfiguredTool(tool, ModConfig.ihuTools.get());
         if (!correctTool) return;
 
         int effLevel = Utilities.checkEfficiency(tool,world);   // Get Efficiency Level

@@ -9,7 +9,7 @@ import java.util.List;
 
 
 @EventBusSubscriber(modid = LqDFxsExtras.MODID)
-public class ModConfigCommon {
+public class ModConfig {
 
     private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
 
@@ -41,9 +41,9 @@ public class ModConfigCommon {
 
     static {
 
-        // -------------------------------------------------
-        // Mob Rules
-        // -------------------------------------------------
+        /* -----------------------------------------------------------
+         * Mob Rules
+         * ----------------------------------------------------------- */
         BUILDER.comment("Mob behavior rules").push("Mob Rules");
 
         mrCreepersBurn = BUILDER.comment("Creepers burn in daylight").define("creepers_burn", true);
@@ -60,16 +60,16 @@ public class ModConfigCommon {
 
         BUILDER.pop();
 
-        // -------------------------------------------------
-        // Improved Mining Speed
-        // -------------------------------------------------
+        /* -----------------------------------------------------------
+         * Improved Mining Speeds
+         * ----------------------------------------------------------- */
         BUILDER.comment("Improved Mining Speed").push("Improved Mining Speed");
 
         imsEnable = BUILDER.comment("Enable Improved mining speed?").define("ims_enabled", true);
 
         imsTools = BUILDER
                 .comment("Tools that should get a speed bump:")
-                .defineListAllowEmpty("ims_tools", List.of("minecraft:diamond_pickaxe", "minecraft:netherite_pickaxe"), () -> "", ModConfigCommon::validateItem);
+                .defineListAllowEmpty("ims_tools", List.of("minecraft:diamond_pickaxe", "minecraft:netherite_pickaxe"), () -> "", ModConfig::validateItem);
 
         imsTNTBreaksEnable = BUILDER.comment("Enable TNT breaks Bedrock").define("ims_tnt_enabled", true);
 
@@ -79,9 +79,9 @@ public class ModConfigCommon {
 
         BUILDER.pop();
 
-        // -------------------------------------------------
-        // Improved Hoe Use
-        // -------------------------------------------------
+        /* -----------------------------------------------------------
+         * Improved Hoe Use
+         * ----------------------------------------------------------- */
         BUILDER.comment("Improved Hoe Use").push("Improved Hoe Use");
 
         ihuReplantEnabled = BUILDER.comment("Enable Crop replanting").define("ihu_CropReplanting", true);
@@ -93,7 +93,7 @@ public class ModConfigCommon {
                 .defineListAllowEmpty("ihu_tools",
                         List.of("minecraft:wooden_hoe","minecraft:stone_hoe","minecraft:copper_hoe","minecraft:iron_hoe","minecraft:golden_hoe","minecraft:diamond_hoe", "minecraft:netherite_hoe"),
                         () -> "",
-                        ModConfigCommon::validateItem);
+                        ModConfig::validateItem);
 
         ihuEfficiencyLvl = BUILDER
                 .comment("Extra efficiency level applied to tilling")

@@ -1,4 +1,4 @@
-package work.lqdfxnet.lqdfxsextras.Events;
+package work.lqdfxnet.lqdfxsextras.entity.villager;
 
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
@@ -16,7 +16,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.registries.DeferredItem;
-import work.lqdfxnet.lqdfxsextras.Data.ModDataComponents;
+import work.lqdfxnet.lqdfxsextras.ModData.ModDataComponents;
 
 import static work.lqdfxnet.lqdfxsextras.LqDFxsExtras.debugInfo;
 import static work.lqdfxnet.lqdfxsextras.item.ModItems.VILLAGER_BUCKET_BY_TYPE;

@@ -1,4 +1,4 @@
-package work.lqdfxnet.lqdfxsextras.Events;
+package work.lqdfxnet.lqdfxsextras.entity.villager;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -21,18 +21,16 @@ import net.minecraft.world.level.storage.TagValueInput;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.neoforged.fml.common.EventBusSubscriber;
 import org.jspecify.annotations.NonNull;
-import work.lqdfxnet.lqdfxsextras.Data.ModDataComponents;
+import work.lqdfxnet.lqdfxsextras.ModData.ModDataComponents;
 
-@EventBusSubscriber
 public class VillagerBucketItem extends Item {
     public VillagerBucketItem(Properties properties) {
         super(properties);
     }
 
     @Override
-    public @NonNull InteractionResult use(Level level, Player player, InteractionHand hand) {
+    public @NonNull InteractionResult use(@NonNull Level level, Player player, @NonNull InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
 
         if (!player.isShiftKeyDown()) {

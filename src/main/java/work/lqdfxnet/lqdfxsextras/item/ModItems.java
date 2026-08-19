@@ -4,7 +4,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import work.lqdfxnet.lqdfxsextras.Events.VillagerBucketItem;
+import work.lqdfxnet.lqdfxsextras.entity.villager.VillagerBucketItem;
 
 import java.util.Map;
 
@@ -37,5 +37,11 @@ public class ModItems {
             Identifier.withDefaultNamespace("swamp"),   VILLAGER_BUCKET_SWAMP,
             Identifier.withDefaultNamespace("jungle"),  VILLAGER_BUCKET_JUNGLE
     );
+
+    /*public static void register(IEventBus eventBus) {
+        ITEMS.register(eventBus);
+    }
+
+     */
 
 }

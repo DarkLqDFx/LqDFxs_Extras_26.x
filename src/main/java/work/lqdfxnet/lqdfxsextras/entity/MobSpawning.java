@@ -1,4 +1,4 @@
-package work.lqdfxnet.lqdfxsextras.EntityRules;
+package work.lqdfxnet.lqdfxsextras.entity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
@@ -14,24 +14,26 @@ import net.minecraft.world.level.LevelAccessor;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
-import work.lqdfxnet.lqdfxsextras.ModConfigCommon;
+import work.lqdfxnet.lqdfxsextras.ModConfig;
 
 @EventBusSubscriber
-public class mobSpawning {
+public class MobSpawning {
 
     @SubscribeEvent
     public static void mobJoinLevel(EntityJoinLevelEvent event) {
-
-        // Server side event only
         if (event.getEntity().level().isClientSide()) return;
 
-        // Vex spawning - False here means not to spawn
+        /* -----------------------------------------------------------
+         * Vex spawning - False here means not to spawn
+         * ----------------------------------------------------------- */
         if (event.getEntity() instanceof Vex && !vexSpawnEnabled()) {
             event.setCanceled(true);
             return;
         }
 
-        // Convert Skeletons in Nether - True means Convert
+        /* -----------------------------------------------------------
+         * Convert Skeletons in Nether - True means Convert
+         * ----------------------------------------------------------- */
         if ((event.getEntity() instanceof Skeleton skeleton)) {
             if (!netherSkeletonReplacementEnabled()) return;
 
@@ -53,12 +55,10 @@ public class mobSpawning {
 
     }
 
-    private static boolean vexSpawnEnabled() {
-        return ModConfigCommon.mrVexSpawn.get();
-    }
-
-    private static boolean netherSkeletonReplacementEnabled() {
-        return ModConfigCommon.mrNetherSkeleton.get();
-    }
+    /* -----------------------------------------------------------
+     * ModConfig Helper shortcuts
+     * ----------------------------------------------------------- */
+    private static boolean vexSpawnEnabled() { return ModConfig.mrVexSpawn.get(); }
+    private static boolean netherSkeletonReplacementEnabled() { return ModConfig.mrNetherSkeleton.get(); }
 
 }
