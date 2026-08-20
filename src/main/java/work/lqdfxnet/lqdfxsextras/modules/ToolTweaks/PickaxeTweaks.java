@@ -1,4 +1,4 @@
-package work.lqdfxnet.lqdfxsextras.event;
+package work.lqdfxnet.lqdfxsextras.modules.ToolTweaks;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
@@ -11,26 +11,25 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
-import work.lqdfxnet.lqdfxsextras.ModConfig;
-import work.lqdfxnet.lqdfxsextras.Utilities;
+import work.lqdfxnet.lqdfxsextras.Config;
 
 
 @EventBusSubscriber
-public class ImproveMiningSpeed {
+public class PickaxeTweaks {
 
     @SubscribeEvent
     public static void onBreakSpeed(PlayerEvent.BreakSpeed event) {
-        if (!ModConfig.imsEnable.get()) return;   // Bail if not enabled
+        if (!Config.imsEnable.get()) return;   // Bail if not enabled
 
         LevelAccessor world = event.getEntity().level();
         Player player = event.getEntity();
 
         ItemStack tool = player.getMainHandItem();
         if (tool.isEmpty()) return;     // Make sure there is a tool in hand
-        boolean correctTool = Utilities.isConfiguredTool(tool, ModConfig.ihuTools.get());
+        boolean correctTool = ToolUtilities.isConfiguredTool(tool, Config.ihuTools.get());
         if (!correctTool) return;
 
-        int effLevel = Utilities.checkEfficiency(tool,world);   // Get Efficiency Level
+        int effLevel = ToolUtilities.checkEfficiency(tool,world);   // Get Efficiency Level
 
         // Haste Check (Beacon Mining)
         MobEffectInstance haste = player.getEffect(MobEffects.HASTE);

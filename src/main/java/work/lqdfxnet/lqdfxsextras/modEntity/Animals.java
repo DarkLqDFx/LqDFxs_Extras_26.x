@@ -1,4 +1,4 @@
-package work.lqdfxnet.lqdfxsextras.entity;
+package work.lqdfxnet.lqdfxsextras.modEntity;
 
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.AgeableMob;
@@ -7,6 +7,9 @@ import net.minecraft.world.entity.animal.pig.Pig;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.BabyEntitySpawnEvent;
+
+import static work.lqdfxnet.lqdfxsextras.LqDFxsExtras.debugDev;
+import static work.lqdfxnet.lqdfxsextras.LqDFxsExtras.debugInfo;
 
 @EventBusSubscriber
 public class Animals {
@@ -23,6 +26,9 @@ public class Animals {
             if (!(event.getParentA() instanceof Animal parentA)) return;
             if (!(event.getParentB() instanceof Animal parentB)) return;
             int litterSize = 1 + serverLevel.getRandom().nextInt(2);
+            if (debugDev()){
+                debugInfo("Pig litters size: " + litterSize);
+            }
 
             if (litterSize > 1) {
                 for (int i = 0; i < litterSize; i++) {

@@ -1,4 +1,4 @@
-package work.lqdfxnet.lqdfxsextras.entity;
+package work.lqdfxnet.lqdfxsextras.modEntity;
 
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.monster.Creeper;
@@ -10,7 +10,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.EntityMobGriefingEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
-import work.lqdfxnet.lqdfxsextras.ModConfig;
+import work.lqdfxnet.lqdfxsextras.Config;
 
 @EventBusSubscriber
 public class MobGriefing {
@@ -52,18 +52,18 @@ public class MobGriefing {
      * ModConfig Helper shortcuts
      * ----------------------------------------------------------- */
     private static boolean farmlandTrampleEnabled() {
-        return ModConfig.mrFarmLand.get();
+        return Config.mrFarmLand.get();
     }
     private static boolean endermanGriefingEnabled() {
-        return ModConfig.mrEndermanGriefing.get();
+        return Config.mrEndermanGriefing.get();
     }
     private static boolean creeperGriefingEnabled() {
-        return ModConfig.mrCreeperGriefing.get();
+        return Config.mrCreeperGriefing.get();
     }
     private static boolean silverfishGriefingEnabled() {
-        return ModConfig.mrSilverfishGriefing.get();
+        return Config.mrSilverfishGriefing.get();
     }
     private static boolean ghastGriefingEnabled() {
-        return ModConfig.mrGhastGriefing.get();
+        return Config.mrGhastGriefing.get();
     }
 }

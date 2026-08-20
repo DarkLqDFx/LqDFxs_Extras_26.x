@@ -1,4 +1,4 @@
-package work.lqdfxnet.lqdfxsextras.entity.villager;
+package work.lqdfxnet.lqdfxsextras.modules.VillagerBucket;
 
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
@@ -16,16 +16,15 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.registries.DeferredItem;
-import work.lqdfxnet.lqdfxsextras.ModData.ModDataComponents;
 
 import static work.lqdfxnet.lqdfxsextras.LqDFxsExtras.debugInfo;
-import static work.lqdfxnet.lqdfxsextras.item.ModItems.VILLAGER_BUCKET_BY_TYPE;
+
 
 @EventBusSubscriber
-public class VillagerPickup {
+public class InaBucketPickup {
 
     @SubscribeEvent
-    public static void onVillagerPickup(PlayerInteractEvent.EntityInteract event) {
+    public static void bucketPickup(PlayerInteractEvent.EntityInteract event) {
 
         if (!(event.getTarget() instanceof Villager villager)) return;
         Player player = event.getEntity();
@@ -42,7 +41,7 @@ public class VillagerPickup {
         // Find the correct biome item for this villager's type
         VillagerType type = villager.getVillagerData().type().value();
         Identifier typeId = BuiltInRegistries.VILLAGER_TYPE.getKey(type);
-        DeferredItem<Item> filledItem = VILLAGER_BUCKET_BY_TYPE.get(typeId);
+        DeferredItem<Item> filledItem = InaBucketItems.VILLAGER_BUCKET_BY_TYPE.get(typeId);
         if (filledItem == null) return; // unknown/modded villager type I haven't made a variant for
 
         // Snapshot the full entity (profession, trades, level, xp, age/baby state — all of it)
@@ -60,7 +59,7 @@ public class VillagerPickup {
         villagerData.remove("UUID");
 
         ItemStack filledBucket = new ItemStack(filledItem.get());
-        filledBucket.set(ModDataComponents.VILLAGER_DATA.get(), villagerData);
+        filledBucket.set(InaBucketData.VILLAGER_DATA.get(), villagerData);
 
         // Remove the original — one bucket, one villager, no duplication
         villager.discard();

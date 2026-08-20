@@ -1,15 +1,13 @@
 package work.lqdfxnet.lqdfxsextras;
 
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.Identifier;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.common.ModConfigSpec;
-
 import java.util.List;
 
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.Identifier;
+import net.neoforged.neoforge.common.ModConfigSpec;
 
-@EventBusSubscriber(modid = LqDFxsExtras.MODID)
-public class ModConfig {
+
+public class Config {
 
     private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
 
@@ -69,13 +67,13 @@ public class ModConfig {
 
         imsTools = BUILDER
                 .comment("Tools that should get a speed bump:")
-                .defineListAllowEmpty("ims_tools", List.of("minecraft:diamond_pickaxe", "minecraft:netherite_pickaxe"), () -> "", ModConfig::validateItem);
+                .defineListAllowEmpty("ims_tools", List.of("minecraft:diamond_pickaxe", "minecraft:netherite_pickaxe"), () -> "", Config::validateItem);
 
         imsTNTBreaksEnable = BUILDER.comment("Enable TNT breaks Bedrock").define("ims_tnt_enabled", true);
 
         imsTNTBreakRadius = BUILDER
                 .comment("Radius of Bedrock affected by blast.\nNote: TNT must be on Bedrock to be affected!")
-                        .defineInRange("ims_tnt_radius",1,1,3);
+                .defineInRange("ims_tnt_radius",1,1,3);
 
         BUILDER.pop();
 
@@ -93,7 +91,7 @@ public class ModConfig {
                 .defineListAllowEmpty("ihu_tools",
                         List.of("minecraft:wooden_hoe","minecraft:stone_hoe","minecraft:copper_hoe","minecraft:iron_hoe","minecraft:golden_hoe","minecraft:diamond_hoe", "minecraft:netherite_hoe"),
                         () -> "",
-                        ModConfig::validateItem);
+                        Config::validateItem);
 
         ihuEfficiencyLvl = BUILDER
                 .comment("Extra efficiency level applied to tilling")

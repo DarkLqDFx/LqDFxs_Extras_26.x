@@ -1,4 +1,4 @@
-package work.lqdfxnet.lqdfxsextras.event;
+package work.lqdfxnet.lqdfxsextras.modules.ToolTweaks;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -18,9 +18,8 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
+import work.lqdfxnet.lqdfxsextras.Config;
 import work.lqdfxnet.lqdfxsextras.LqDFxsExtras;
-import work.lqdfxnet.lqdfxsextras.ModConfig;
-import work.lqdfxnet.lqdfxsextras.Utilities;
 
 
 @EventBusSubscriber
@@ -43,13 +42,13 @@ public class HoeTweaks {
         Player player = event.getEntity();
         if (!player.isShiftKeyDown()) return;   // Must be sneaking
         ItemStack hoe = player.getMainHandItem();
-        boolean correctTool = Utilities.isConfiguredTool(hoe, ModConfig.ihuTools.get());
+        boolean correctTool = ToolUtilities.isConfiguredTool(hoe, Config.ihuTools.get());
         if (hoe.isEmpty() || !correctTool) return;
 
         event.setCanceled(true);
 
         LqDFxsExtras.queueServerWork(1, () -> {
-            Utilities.unTill(level, pos);
+            ToolUtilities.unTill(level, pos);
             player.swing(InteractionHand.MAIN_HAND, true);
             hoe.hurtAndBreak(1, player, player.getUsedItemHand());
             level.playSound(null, pos, SoundEvents.HOE_TILL, SoundSource.BLOCKS, 1.0F, 0.8F);
@@ -70,14 +69,14 @@ public class HoeTweaks {
         Player player = event.getEntity();
         if (player.isShiftKeyDown()) return;   // Sneaking preserves Vanilla behavior
         ItemStack hoe = player.getMainHandItem();
-        boolean correctTool = Utilities.isConfiguredTool(hoe, ModConfig.ihuTools.get());
+        boolean correctTool = ToolUtilities.isConfiguredTool(hoe, Config.ihuTools.get());
         if (hoe.isEmpty() || !correctTool) return;
 
-        int radius = Utilities.getHoeRadius(hoe.toString());
-        int efficiencyLevel = Utilities.checkEfficiency(hoe,event.getLevel());
+        int radius = ToolUtilities.getHoeRadius(hoe.toString());
+        int efficiencyLevel = ToolUtilities.checkEfficiency(hoe,event.getLevel());
         if ((efficiencyLevel >= 1) && (efficiencyLevel <= 2))  radius = efficiencyLevel + radius;
 
-        boolean tillable = Utilities.canBeFarmland(player, state, hit);
+        boolean tillable = ToolUtilities.canBeFarmland(player, state, hit);
         boolean waterLogged;
         if (state.getBlock() instanceof SimpleWaterloggedBlock)
             waterLogged = state.getValue(BlockStateProperties.WATERLOGGED);
@@ -93,7 +92,7 @@ public class HoeTweaks {
                 BlockPos target = pos.offset(dx, 0, dz);
                 BlockState targetState = level.getBlockState(target);
                 BlockHitResult targetHit = new BlockHitResult(target.getCenter(), hit.getDirection(), target, hit.isInside());
-                boolean tillBlock = Utilities.canBeFarmland(player, targetState, targetHit);
+                boolean tillBlock = ToolUtilities.canBeFarmland(player, targetState, targetHit);
                 if (tillBlock) {
                     tillCount++;
                     LqDFxsExtras.queueServerWork(1, () -> {

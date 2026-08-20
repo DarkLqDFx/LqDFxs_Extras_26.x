@@ -1,4 +1,4 @@
-package work.lqdfxnet.lqdfxsextras.event;
+package work.lqdfxnet.lqdfxsextras.modules.ToolTweaks;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -16,11 +16,10 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
+import work.lqdfxnet.lqdfxsextras.Config;
 import work.lqdfxnet.lqdfxsextras.LqDFxsExtras;
-import work.lqdfxnet.lqdfxsextras.ModConfig;
-import work.lqdfxnet.lqdfxsextras.Utilities;
 
-@EventBusSubscriber(modid = "lqdfxsextras")
+@EventBusSubscriber
 public class CropReplant {
 
     @SubscribeEvent
@@ -29,12 +28,12 @@ public class CropReplant {
         BlockState clickedState = event.getLevel().getBlockState(event.getPos());
         if (!(clickedState.getBlock() instanceof CropBlock)) return;
         if (!(event.getLevel() instanceof ServerLevel level)) return;
-        if (!ModConfig.ihuReplantEnabled.get()) return;
+        if (!Config.ihuReplantEnabled.get()) return;
 
         Player player = event.getEntity();
         ItemStack tool = player.getMainHandItem();
-        boolean correctTool = Utilities.isConfiguredTool(tool, ModConfig.ihuTools.get());
-        int radius = correctTool ? Utilities.getHoeRadius(tool.toString()) : 0;
+        boolean correctTool = ToolUtilities.isConfiguredTool(tool, Config.ihuTools.get());
+        int radius = correctTool ? ToolUtilities.getHoeRadius(tool.toString()) : 0;
 
         BlockPos origin = event.getHitVec().getBlockPos();
         event.setCanceled(true);
@@ -48,24 +47,24 @@ public class CropReplant {
                 BlockState targetState = level.getBlockState(targetPos);
                 Block targetBlock = targetState.getBlock();
 
-                IntegerProperty ageProp = Utilities.getAgeProperty(targetBlock);
+                IntegerProperty ageProp = ToolUtilities.getAgeProperty(targetBlock);
                 if (ageProp == null) continue;
 
                 int age = targetState.getValue(ageProp);
-                int maxAge = Utilities.getMaxAge(targetBlock);
+                int maxAge = ToolUtilities.getMaxAge(targetBlock);
 
-                Item seedItem = Utilities.getSeedFromCrop(level, targetState, targetPos);
+                Item seedItem = ToolUtilities.getSeedFromCrop(level, targetState, targetPos);
                 if (seedItem == null) continue;
 
                 if (age == maxAge) {
-                    Utilities.consumeOneSeed(event.getEntity(), seedItem);
+                    ToolUtilities.consumeOneSeed(event.getEntity(), seedItem);
                     replantedCount++;
 
                     LqDFxsExtras.queueServerWork(1, () -> {
                         int xp = level.getRandom().nextInt(3) + 1;
                         level.destroyBlock(targetPos, true);
                         level.addFreshEntity(new ExperienceOrb(level, targetPos.getX() + 0.5, targetPos.getY() + 0.5, targetPos.getZ() + 0.5, xp));
-                        Utilities.replantCrop(level, targetPos, targetState);
+                        ToolUtilities.replantCrop(level, targetPos, targetState);
                     });
                 }
             }

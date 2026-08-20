@@ -1,4 +1,4 @@
-package work.lqdfxnet.lqdfxsextras.entity;
+package work.lqdfxnet.lqdfxsextras.modEntity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
@@ -18,10 +18,12 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
-import work.lqdfxnet.lqdfxsextras.ModConfig;
+import work.lqdfxnet.lqdfxsextras.Config;
+import work.lqdfxnet.lqdfxsextras.LqDFxsExtras;
 
-import static work.lqdfxnet.lqdfxsextras.LqDFxsExtras.debugInfo;
 import static work.lqdfxnet.lqdfxsextras.LqDFxsExtras.queueServerWork;
+import static work.lqdfxnet.lqdfxsextras.LqDFxsExtras.debugInfo;
+
 
 @EventBusSubscriber
 public class Monsters {
@@ -35,10 +37,9 @@ public class Monsters {
     public static void burnMonster(EntityTickEvent.Pre event) {
 
         if (event.getEntity().level().isClientSide()) return;
-        if (!(event.getEntity() instanceof Creeper)) return;
+        if (!(event.getEntity() instanceof Creeper creeper)) return;
         if (!creepersBurnEnabled()) return;
 
-        Entity creeper = event.getEntity();
         BlockPos pos = event.getEntity().blockPosition();
         LevelAccessor world = event.getEntity().level();
 
@@ -89,12 +90,14 @@ public class Monsters {
         boolean blockSeeSky = world.canSeeSky(pos);
         boolean skyBrightness = world.getBrightness(LightLayer.SKY, pos) == 15;
         boolean waterLikeBlock = entity.isInWaterOrRain() || entity.isInPowderSnow || entity.wasInPowderSnow;
-        debugInfo("Overworld: {}", worldDim);
-        debugInfo("Biome: {}", worldBio);
-        debugInfo("Day: {}", worldDay);
-        debugInfo("BlockSeeSky: {}", blockSeeSky);
-        debugInfo("Brightness: {}", skyBrightness);
-        debugInfo("WaterLikeBlock: {}", waterLikeBlock);
+        if (LqDFxsExtras.debugDev()) {
+            debugInfo("Overworld: {}", worldDim);
+            debugInfo("Biome: {}", worldBio);
+            debugInfo("Day: {}", worldDay);
+            debugInfo("BlockSeeSky: {}", blockSeeSky);
+            debugInfo("Brightness: {}", skyBrightness);
+            debugInfo("WaterLikeBlock: {}", waterLikeBlock);
+        }
 
         if (worldDim && worldDay && blockSeeSky && skyBrightness) {
             if (!entity.isOnFire() && (worldBio || !entity.isInWaterOrRain()))
@@ -107,9 +110,9 @@ public class Monsters {
      * ModConfig Helper shortcuts
      * ----------------------------------------------------------- */
     private static boolean vexDespawnOnEvokerDeathEnabled() {
-        return ModConfig.mrEvokerDeath.get();
+        return Config.mrEvokerDeath.get();
     }
     private static boolean creepersBurnEnabled() {
-        return ModConfig.mrCreepersBurn.get();
+        return Config.mrCreepersBurn.get();
     }
 }

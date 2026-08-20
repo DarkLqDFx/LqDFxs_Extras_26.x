@@ -1,4 +1,4 @@
-package work.lqdfxnet.lqdfxsextras.entity.villager;
+package work.lqdfxnet.lqdfxsextras.modules.VillagerBucket;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -22,10 +22,9 @@ import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import org.jspecify.annotations.NonNull;
-import work.lqdfxnet.lqdfxsextras.ModData.ModDataComponents;
 
-public class VillagerBucketItem extends Item {
-    public VillagerBucketItem(Properties properties) {
+public class InaBucketDropoff extends Item {
+    public InaBucketDropoff(Properties properties) {
         super(properties);
     }
 
@@ -33,18 +32,12 @@ public class VillagerBucketItem extends Item {
     public @NonNull InteractionResult use(@NonNull Level level, Player player, @NonNull InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
 
-        if (!player.isShiftKeyDown()) {
-            return InteractionResult.PASS; // let normal block interaction happen instead
-        }
+        if (!player.isShiftKeyDown()) { return InteractionResult.PASS; }
 
-        if (level.isClientSide()) {
-            return InteractionResult.SUCCESS;
-        }
+        if (level.isClientSide()) { return InteractionResult.SUCCESS; }
 
-        CompoundTag villagerData = stack.get(ModDataComponents.VILLAGER_DATA.get());
-        if (villagerData == null) {
-            return InteractionResult.PASS;
-        }
+        CompoundTag villagerData = stack.get(InaBucketData.VILLAGER_DATA.get());
+        if (villagerData == null) { return InteractionResult.PASS; }
 
         BlockHitResult hit = getPlayerPOVHitResult(level, player, ClipContext.Fluid.NONE);
         if (hit.getType() != HitResult.Type.BLOCK) {

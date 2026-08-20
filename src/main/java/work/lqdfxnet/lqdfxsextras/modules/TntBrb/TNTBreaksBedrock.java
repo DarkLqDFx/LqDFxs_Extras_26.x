@@ -1,4 +1,4 @@
-package work.lqdfxnet.lqdfxsextras.event;
+package work.lqdfxnet.lqdfxsextras.modules.TntBrb;
 
 
 import net.minecraft.core.BlockPos;
@@ -10,22 +10,22 @@ import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.level.ExplosionEvent;
-import work.lqdfxnet.lqdfxsextras.ModConfig;
+import work.lqdfxnet.lqdfxsextras.Config;
 
 import java.util.function.Consumer;
 
 @EventBusSubscriber
-public class TNTBreakBedrock {
+public class TNTBreaksBedrock {
 
     @SubscribeEvent
     public static void tntBreaksBedrock(ExplosionEvent.Detonate event) {
-        if (!ModConfig.imsTNTBreaksEnable.get()) return;
+        if (!Config.imsTNTBreaksEnable.get()) return;
         if (event.getLevel().isClientSide()) return;
         if (!(event.getExplosion().getDirectSourceEntity() instanceof PrimedTnt)) return;
 
         Level level = event.getLevel();
         Vec3 center = event.getExplosion().center();
-        int radius = ModConfig.imsTNTBreakRadius.getAsInt(); // Configurable Radius!!!
+        int radius = Config.imsTNTBreakRadius.getAsInt(); // Configurable Radius!!!
 
         scanExplosionRadius(center, radius, pos -> {
             BlockState state = level.getBlockState(pos);
