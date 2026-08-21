@@ -59,12 +59,19 @@
   "lqdfxsextras.configuration.ihu_efficiency_lvl": "Eff Level - Unused",
   "lqdfxsextras.configuration.ihu_efficiency_lvl.tooltip": "Unused... Maybe in the future?",
 
-  "item.lqdfxsextras.villager_bucket_plains": "Bucket - Plains Villager",
-  "item.lqdfxsextras.villager_bucket_desert": "Bucket - Desert Villager",
-  "item.lqdfxsextras.villager_bucket_savanna": "Bucket - Savanna Villager",
-  "item.lqdfxsextras.villager_bucket_taiga": "Bucket - Taiga Villager",
-  "item.lqdfxsextras.villager_bucket_snow": "Bucket - Snow Villager",
-  "item.lqdfxsextras.villager_bucket_swamp": "Bucket - Swamp Villager",
-  "item.lqdfxsextras.villager_bucket_jungle": "Bucket - Jungle Villager"
+  "item.lqdfxsextras.villager_bucket_plains": "Bucket of Villager",
+  "item.lqdfxsextras.villager_bucket_desert": "Bucket of Villager",
+  "item.lqdfxsextras.villager_bucket_savanna": "Bucket of Villager",
+  "item.lqdfxsextras.villager_bucket_taiga": "Bucket of Villager",
+  "item.lqdfxsextras.villager_bucket_snow": "Bucket of Villager",
+  "item.lqdfxsextras.villager_bucket_swamp": "Bucket of Villager",
+  "item.lqdfxsextras.villager_bucket_jungle": "Bucket of Villager",
+
+  "tooltip.lqdfxsextras.villager_type": "Region: %s",
+  "tooltip.lqdfxsextras.villager_age": "Age: %s",
+  "tooltip.lqdfxsextras.baby": "Baby",
+  "tooltip.lqdfxsextras.adult": "Adult",
+  "tooltip.lqdfxsextras.villager_profession_level": "Profession: %s Level: %s",
+  "tooltip.lqdfxsextras.unemployed": "Unemployed"
 }
 

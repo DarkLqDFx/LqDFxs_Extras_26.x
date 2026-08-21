@@ -5,6 +5,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.npc.villager.Villager;
 import net.minecraft.world.entity.npc.villager.VillagerType;
 import net.minecraft.world.entity.player.Player;
@@ -55,6 +56,11 @@ public class InaBucketPickup {
         // Strip anything we explicitly don't want to persist:
         // - Brain memories (job site / home / meeting point) so the villager re-searches on placement
         // - UUID, so the placed copy gets a fresh identity instead of risking a collision
+        villager.releasePoi(MemoryModuleType.HOME);
+        villager.releasePoi(MemoryModuleType.JOB_SITE);
+        villager.releasePoi(MemoryModuleType.POTENTIAL_JOB_SITE);
+        villager.releasePoi(MemoryModuleType.MEETING_POINT);
+
         villagerData.remove("Brain");
         villagerData.remove("UUID");
 
